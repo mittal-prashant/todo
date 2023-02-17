@@ -12,9 +12,11 @@
 <body>
     <div class="content">
         <h1 style="text-align: center">TODO List</h1>
+        <!-- If there are no tasks i.e. length of tasks list less than 1 print message that there are no tasks -->
         {% if tasks|length < 1 %} <h4 style="text-align: center">There are no tasks. Create one below!</h4>
             {% else %}
             <table>
+                <!-- Creating a table for the tasks -->
                 <tr>
                     <th>Task</th>
                     <th>Actions</th>
@@ -24,16 +26,20 @@
                     <td id="task">
                         <form action="/done/{{task.id}}" method="POST">
                             {% if task.completed %}
+                            <!-- If the task is completed check the checkbox -->
                             <input type="checkbox" onclick="this.form.submit()" checked>
                             {% else %}
+                            <!-- If checkbox is clicked mark the task as done in database -->
                             <input type="checkbox" onclick="this.form.submit()">
                             {% endif %}
                             <label>{{ task.content }}</label>
                         </form>
                     </td>
                     <td>
+                        <!-- Redirect to delete api if delete button is clicked -->
                         <a href="/delete/{{task.id}}"><button id="delete">Delete</button> </a>
                         <br>
+                        <!-- Redirect to update api if update button is clicked -->
                         <a href="/update/{{task.id}}"><button id='update'>Update</button></a>
                     </td>
                 </tr>

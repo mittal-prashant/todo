@@ -2,6 +2,8 @@
 from flask import Flask, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import sqlite3
+import pandas as pd
 
 # Initialsed app
 app = Flask(__name__)
@@ -29,12 +31,15 @@ class Todo(db.Model):
 
 
 # Initial entry point of the application, POST and GET both requests allowed
-# GET request will get all the tasks in database, POST request will add a task in database
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if (request.method == 'POST'):
-        # if the request is post that means a new task is added
+        # if the request is POST that means a new task is added
         task_content = request.form['content']
+        if(task_content == ""):
+            # content should not be empty
+            print("Empty task is not allowed")
+            return redirect('/')
         new_task = Todo(content=task_content)
         try:
             # add the new task to database
@@ -45,6 +50,7 @@ def index():
             # if not added return adding error
             return "There was an issue adding your task"
     else:
+        # if GET request print all the tasks sorted by creation date from old to new
         tasks = Todo.query.order_by(Todo.date_time).all()
         return render_template('index.html', tasks=tasks)
 
@@ -61,7 +67,7 @@ def done(id):
         try:
             # commit changes to database
             db.session.commit()
-            print("done")
+            # print("done")
             return redirect('/')
         except:
             # if not changed return error
@@ -93,7 +99,12 @@ def update(id):
     task = Todo.query.get_or_404(id)
     if (request.method == 'POST'):
         # new content is taken from the form
-        task.content = request.form['content']
+        task_content = request.form['content']
+        if(task_content == ""):
+            # updated content should not be empty
+            print("Empty task is not allowed")
+            return redirect("/update/"+str(id))
+        task.content = task_content
         try:
             # commit changes to database
             db.session.commit()
