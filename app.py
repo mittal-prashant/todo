@@ -114,6 +114,6 @@ def update(id):
         return render_template('update.html', task=task)
 
 
-if (__name__ == "main"):
-    # run the application(server)
+# if (__name__ == "main"):
+#     # run the application(server)
     app.run(port=80)
