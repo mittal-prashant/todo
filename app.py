@@ -114,6 +114,6 @@ def update(id):
         return render_template('update.html', task=task)
 
 
-# if (__name__ == "main"):
+if (__name__ == "main"):
     # run the application(server)
-app.run(host='0.0.0.0')
+    app.run()
