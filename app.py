@@ -116,4 +116,4 @@ def update(id):
 
 # if (__name__ == "main"):
     # run the application(server)
-app.run(host='0.0.0.0', port=80)
+app.run(host='0.0.0.0')
