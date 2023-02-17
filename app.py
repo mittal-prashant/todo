@@ -2,8 +2,6 @@
 from flask import Flask, redirect, render_template, request
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
-import sqlite3
-import pandas as pd
 
 # Initialsed app
 app = Flask(__name__)
@@ -118,4 +116,4 @@ def update(id):
 
 if (__name__ == "main"):
     # run the application(server)
-    app.run()
+    app.run(port=80)
